@@ -19,10 +19,14 @@ const Button = (props) => {
     buttonStyleCSSClass += `--${buttonStyle}`;
   }
 
-  // todo: new window logic
   return (
     <div className={`${buttonCSSClassRoot} ${buttonAlignmentCSSClass}`}>
-      <a className={`cta ${buttonStyleCSSClass}`} href={buttonLink}>{buttonText}</a>
+      {openInANewWindow === true &&
+        <a target="_blank" rel="noopener noreferrer" className={`cta ${buttonStyleCSSClass}`} href={buttonLink}>{buttonText}</a>
+      }
+      {openInANewWindow === false &&
+        <a className={`cta ${buttonStyleCSSClass}`} href={buttonLink}>{buttonText}</a>
+      }
     </div>
   );
 };

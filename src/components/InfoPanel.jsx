@@ -28,7 +28,7 @@ class InfoPanel extends Component {
         <button className={ctaClass !== '' ? ctaClass : 'info-panel_cta'} type="button" onClick={this.handleClick}>{title}</button>
         <div className={`info-panel_panel ${active ? 'st-active' : ''}`}>
           <button className="info-panel_close" type="button" onClick={this.handleClick}>
-            <svg width="48" height="48" viewPort="0 0 48 48" version="1.1"
+            <svg width="48" height="48" version="1.1"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill="red" d="M 36.019531 8.445313 L 39.558594 11.980469 L 11.980469 39.554688 L 8.445313 36.019531 Z "/>
                 <path fill="red" d="M 39.554688 36.023438 L 36.019531 39.558594 L 8.445313 11.976563 L 11.980469 8.441406 Z "/>
