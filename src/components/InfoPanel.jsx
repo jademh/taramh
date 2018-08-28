@@ -9,8 +9,29 @@ class InfoPanel extends Component {
     };
 
     this.handleClick = () => {
-      const { active } = this.state;
-      this.setState({ active: !active });
+      if (this.state.active) {
+        this.closePanel();
+      }
+      else {
+        this.openPanel();
+      }
+    };
+
+    this.handleKeyPress = (event) => {
+      // ESC key closes panel
+      if (event.keyCode === 27) {
+        this.closePanel();
+      }
+    };
+
+    this.openPanel = () => {
+      this.setState({ active: true });
+      document.addEventListener('keydown', this.handleKeyPress, false);
+    }
+
+    this.closePanel = () => {
+      this.setState({ active: false });
+      document.removeEventListener('keydown', this.handleKeyPress, false);
     };
   }
 
