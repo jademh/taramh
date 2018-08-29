@@ -1,5 +1,6 @@
 import React from 'react';
 import { css } from 'glamor';
+import { theme } from '../theme';
 
 const Button = (props) => {
   const {
@@ -15,12 +16,12 @@ const Button = (props) => {
   });
 
   const button = css({
-    color: 'blue',
+    color: theme.base.colors.copyLink,
     fontFamily: 'sans-serif',
     transition: 'color 300ms ease-in-out',
-    fontSize: buttonStyle === 'primary' ? '25px' : '14px',
+    fontSize: buttonStyle === 'primary' ? theme.cta.primaryFontSize : theme.cta.secondaryFontSize,
     ':hover': {
-      color: 'red',
+      color: theme.base.colors.copyLinkHover,
     },
   });
 

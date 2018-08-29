@@ -1,9 +1,7 @@
 body {
-	background: #f5dcd2;
 	font-family: "Times New Roman", "Times Roman", serif;
 	font-size: 15px;
 	line-height: 25px;
-	color: red;
 	-webkit-font-smoothing: antialiased;
 	margin: 0;
 	padding: 0;
@@ -34,10 +32,6 @@ h6 {
 }
 
 p a {
-  color: blue;
   transition: color 300ms ease-in-out;
-}
-p a:hover {
-	color: red;
 }
 

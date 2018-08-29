@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { css } from 'glamor';
 import InfoPanel from '../components/InfoPanel';
+import { theme } from '../theme';
 
 import './index.css';
 
 const Layout = ({ children, data }) => {
+
+  css.global('body', { background: theme.base.colors.background, color: theme.base.colors.copy });
+  css.global('p a', { color: theme.base.colors.copyLink });
+  css.global('p a:hover', { color: theme.base.colors.copyLinkHover });
+
   const nav = css({
     position: 'fixed',
     bottom: '10px',
