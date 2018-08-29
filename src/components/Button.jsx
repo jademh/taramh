@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from 'glamor';
 
 const Button = (props) => {
   const {
@@ -9,24 +10,30 @@ const Button = (props) => {
     openInANewWindow,
   } = props;
 
-  const buttonCSSClassRoot = 'cta-wrp';
-  let buttonAlignmentCSSClass = buttonCSSClassRoot;
-  let buttonStyleCSSClass = 'cta';
-  if (buttonAlignment !== '') {
-    buttonAlignmentCSSClass += `--${buttonAlignment}`;
-  }
-  if (buttonStyle !== '') {
-    buttonStyleCSSClass += `--${buttonStyle}`;
-  }
+  const buttonWrap = css({
+    textAlign: buttonAlignment,
+  });
+
+  const button = css({
+    color: 'blue',
+    fontFamily: 'sans-serif',
+    transition: 'color 300ms ease-in-out',
+    fontSize: buttonStyle === 'primary' ? '25px' : '14px',
+    ':hover': {
+      color: 'red',
+    },
+  });
 
   return (
-    <div className={`${buttonCSSClassRoot} ${buttonAlignmentCSSClass}`}>
-      {openInANewWindow === true &&
-        <a target="_blank" rel="noopener noreferrer" className={`cta ${buttonStyleCSSClass}`} href={buttonLink}>{buttonText}</a>
-      }
-      {openInANewWindow === false &&
-        <a className={`cta ${buttonStyleCSSClass}`} href={buttonLink}>{buttonText}</a>
-      }
+    <div {...buttonWrap}>
+      <a
+        {...button}
+        target={openInANewWindow ? '_blank' : undefined}
+        rel={openInANewWindow ? 'noopener noreferrer' : undefined}
+        href={buttonLink}
+      >
+        {buttonText}
+      </a>
     </div>
   );
 };

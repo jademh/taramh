@@ -1,32 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { css } from 'glamor';
 import InfoPanel from '../components/InfoPanel';
 
 import './index.css';
 
-const Layout = ({ children, data }) => (
-  <div>
-    <Helmet
-      title={data.site.siteMetadata.title}
-      meta={[
-        { name: 'description', content: data.site.siteMetadata.description },
-      ]}
-    />
+const Layout = ({ children, data }) => {
+  const nav = css({
+    position: 'fixed',
+    bottom: '10px',
+    marginLeft: '30px',
+    zIndex: 5,
+    '@media only screen and (max-width: 45em)': {
+      top: '5px',
+      bottom: 'auto',
+    },
+  });
+  const navList = css({
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
+  });
+  const navListItem = css({
+    display: 'inline-block',
+    marginRight: '20px',
+  });
+
+  return (
     <div>
-      <nav className="main-nav">
-        <ul className="main-nav_list">
-          {data.allContentfulInfoPage.edges.map(edge => (
-            <li className="main-nav_list-item" key={edge.node.id}>
-              <InfoPanel ctaClass="main-nav_link" node={edge.node} />
-            </li>
-          ))}
-        </ul>
-      </nav>
-      {children()}
+      <Helmet
+        title={data.site.siteMetadata.title}
+        meta={[
+          { name: 'description', content: data.site.siteMetadata.description },
+        ]}
+      />
+      <div>
+        <nav {...nav}>
+          <ul {...navList}>
+            {data.allContentfulInfoPage.edges.map(edge => (
+              <li {...navListItem} key={edge.node.id}>
+                <InfoPanel node={edge.node} />
+              </li>
+            ))}
+          </ul>
+        </nav>
+        {children()}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 Layout.propTypes = {
   children: PropTypes.func,

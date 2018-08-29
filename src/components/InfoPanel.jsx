@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { css } from 'glamor';
 import Module from './Module';
 
 class InfoPanel extends Component {
@@ -40,22 +41,73 @@ class InfoPanel extends Component {
       title,
       contentModules,
     } = this.props.node;
-    const {
-      ctaClass,
-    } = this.props;
     const { active } = this.state;
+
+    const infoPanelCta = css({
+      textTransform: 'uppercase',
+      fontFamily: 'sans-serif',
+      textDecoration: 'none',
+      color: '#1a214f',
+      fontSize: '13px',
+      /* might be a button, not always an <a> */
+      background: 'none',
+      border: 0,
+      cursor: 'pointer',
+      transition: 'color 300ms ease-in-out',
+      ':hover': {
+        color: 'red',
+      },
+    });
+
+    const infoPanel = css({
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      background: '#f5dcd2',
+      width: '100%',
+      height: '100vh',
+      marginTop: '100vh',
+      transition: 'margin 300ms ease-in-out',
+      display: 'flex',
+      alignItems: 'center',
+    });
+    const infoPanelActive = css({
+      marginTop: 0,
+    });
+
+    const infoPanelClose = css({
+      background: 'none',
+      border: 0,
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      cursor: 'pointer',
+      '& svg path': {
+        transition: 'fill 300ms ease-in-out',
+      },
+      ':hover svg path': {
+        fill: 'black',
+      },
+    });
+
+    const infoPanelContent = css({
+      width: '80%',
+      margin: '0 auto',
+      maxWidth: '40em',
+    });
+
     return (
-      <div className="info-panel">
-        <button className={ctaClass !== '' ? ctaClass : 'info-panel_cta'} type="button" onClick={this.handleClick}>{title}</button>
-        <div className={`info-panel_panel ${active ? 'st-active' : ''}`}>
-          <button className="info-panel_close" type="button" onClick={this.handleClick}>
+      <div>
+        <button {...infoPanelCta} type="button" onClick={this.handleClick}>{title}</button>
+        <div {...infoPanel} className={`${active ? infoPanelActive : ''}`}>
+          <button {...infoPanelClose} type="button" onClick={this.handleClick}>
             <svg width="48" height="48" version="1.1"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill="red" d="M 36.019531 8.445313 L 39.558594 11.980469 L 11.980469 39.554688 L 8.445313 36.019531 Z "/>
                 <path fill="red" d="M 39.554688 36.023438 L 36.019531 39.558594 L 8.445313 11.976563 L 11.980469 8.441406 Z "/>
             </svg>
           </button>
-          <div className="info-panel_panel-content">
+          <div {...infoPanelContent}>
             <h1>{title}</h1>
             {contentModules ? contentModules.map(edge => <Module key={edge.id} props={edge} />) : null}
           </div>
