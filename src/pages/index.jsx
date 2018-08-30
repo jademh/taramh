@@ -8,31 +8,34 @@ const IndexPage = ({ data }) => {
   const { node } = data.allContentfulHomepage.edges[0];
 
   // Apply theme if overrides have been entered in CMS
-  if (node.backgroundColour !== '') {
+  if (node.backgroundColour !== null) {
     theme.base.colors.background = node.backgroundColour;
   }
-  if (node.modalBackgroundColour !== '') {
+  if (node.modalBackgroundColour !== null) {
     theme.base.colors.modalBackground = node.modalBackgroundColour;
   }
-  if (node.modalCloseIconColour !== '') {
+  if (node.modalBorderColour !== null) {
+    theme.base.colors.modalBorder = node.modalBorderColour;
+  }
+  if (node.modalCloseIconColour !== null) {
     theme.base.colors.icon = node.modalCloseIconColour;
   }
-  if (node.modalCloseIconColourHover !== '') {
+  if (node.modalCloseIconColourHover !== null) {
     theme.base.colors.iconHover = node.modalCloseIconColourHover;
   }
-  if (node.copyColour !== '') {
+  if (node.copyColour !== null) {
     theme.base.colors.copy = node.copyColour;
   }
-  if (node.copyLinkColour !== '') {
+  if (node.copyLinkColour !== null) {
     theme.base.colors.copyLink = node.copyLinkColour;
   }
-  if (node.copyLinkColourHover !== '') {
+  if (node.copyLinkColourHover !== null) {
     theme.base.colors.copyLinkHover = node.copyLinkColourHover;
   }
-  if (node.navLinkColour !== '') {
+  if (node.navLinkColour !== null) {
     theme.base.colors.navLink = node.navLinkColour;
   }
-  if (node.navLinkColourHover !== '') {
+  if (node.navLinkColourHover !== null) {
     theme.base.colors.navLinkHover = node.navLinkColourHover;
   }
 
@@ -74,6 +77,7 @@ export const pageQuery = graphql`
     allContentfulHomepage (
     filter:  {
       node_locale: {eq: "en-US"}
+      slug: {eq: "homepage"}
     }
     ) {
       edges {
@@ -86,6 +90,7 @@ export const pageQuery = graphql`
           }
           backgroundColour
           modalBackgroundColour
+          modalBorderColour
           modalCloseIconColour
           modalCloseIconColourHover
           copyColour

@@ -4,6 +4,7 @@ const theme = {
     colors: {
       background: '#f5dcd2',
       modalBackground: '#f5dcd2',
+      modalBorder: 'red',
       copy: 'red',
       copyLink: 'blue',
       copyLinkHover: 'red',
