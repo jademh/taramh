@@ -1,7 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { css } from 'glamor';
-import ImageList from '../components/ImageList';
+import Homepage from '../components/Homepage';
 import { theme } from '../theme';
 
 const IndexPage = ({ data }) => {
@@ -39,21 +38,6 @@ const IndexPage = ({ data }) => {
     theme.base.colors.navLinkHover = node.navLinkColourHover;
   }
 
-  const logoMargin = 30;
-  const mainLogoWrap = css({
-    background: theme.base.colors.background,
-    position: 'fixed',
-    top: 0,
-    width: '100%',
-    height: '100vh',
-    zIndex: 1,
-  });
-  const mainLogo = css({
-    maxWidth: `calc(100% - ${logoMargin * 2}px)`,
-    maxHeight: `calc(100vh - ${logoMargin * 2}px)`,
-    margin: `${logoMargin}px`,
-  });
-
   return (
     <div>
       <Helmet
@@ -62,10 +46,11 @@ const IndexPage = ({ data }) => {
           { name: 'description', content: node.pageDescription.childMarkdownRemark.rawMarkdownBody },
         ]}
       />
-      <div {...mainLogoWrap}>
-        <img {...mainLogo} src={node.heroImage.sizes.src} alt={node.heroImage.description} />
-      </div>
-      <ImageList images={node.images} />
+      <Homepage
+        heroImageSrc={node.heroImage.sizes.src}
+        heroImageDescription={node.heroImage.description}
+        imageList={node.imageList}
+      />
     </div>
   );
 };
@@ -104,11 +89,19 @@ export const pageQuery = graphql`
               src
             }
           }
-          images {
-            id
-            description
-            resolutions(width: 900, quality: 100, resizingBehavior: NO_CHANGE) {
-              src
+          imageList {
+            title
+            longDescription {
+              childMarkdownRemark {
+                html
+              }
+            }
+            media {
+              id
+              description
+              resolutions(width: 900, quality: 100, resizingBehavior: NO_CHANGE) {
+                src
+              }
             }
           }
         }
