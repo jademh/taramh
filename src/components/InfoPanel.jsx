@@ -46,7 +46,6 @@ class InfoPanel extends Component {
 
     const infoPanelCta = css({
       textTransform: 'uppercase',
-      fontFamily: 'sans-serif',
       textDecoration: 'none',
       color: theme.base.colors.navLink,
       fontSize: theme.nav.fontSize,
@@ -65,12 +64,18 @@ class InfoPanel extends Component {
       top: 0,
       left: 0,
       background: theme.base.colors.modalBackground,
+      borderTop: `5px solid ${theme.base.colors.modalBorder}`,
       width: '100%',
       height: '100vh',
       marginTop: active ? '0' : '100vh',
       transition: 'margin 300ms ease-in-out',
       display: 'flex',
       alignItems: 'center',
+      color: theme.base.colors.modalCopy,
+    });
+
+    const infoPanelTitle = css({
+      textAlign: 'center',
     });
 
     const infoPanelClose = css({
@@ -91,7 +96,7 @@ class InfoPanel extends Component {
     const infoPanelContent = css({
       width: '80%',
       margin: '0 auto',
-      maxWidth: '40em',
+      maxWidth: '26em',
     });
 
     return (
@@ -106,7 +111,7 @@ class InfoPanel extends Component {
             </svg>
           </button>
           <div {...infoPanelContent}>
-            <h1>{title}</h1>
+            <h1 {...infoPanelTitle}>{title}</h1>
             {contentModules ? contentModules.map(edge => <Module key={edge.id} props={edge} />) : null}
           </div>
         </div>

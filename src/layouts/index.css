@@ -1,5 +1,5 @@
 body {
-	font-family: "Times New Roman", "Times Roman", serif;
+	font-family: "Authentic", "Helvetica", "Arial", sans-serif;
 	font-size: 15px;
 	line-height: 25px;
 	-webkit-font-smoothing: antialiased;
@@ -28,10 +28,30 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: sans-serif;
+	font-family: "Buffon", "Times New Roman", "Times", serif;
+	text-transform: uppercase;
 }
 
 p a {
   transition: color 300ms ease-in-out;
 }
 
+button {
+	font-family: "Authentic", "Helvetica", "Arial", sans-serif;
+}
+
+@font-face {
+	font-family: 'Authentic';
+	src: url('../fonts/AUTHENTIC-Sans.woff2') format('woff2'),
+	  url('../fonts/AUTHENTIC-Sans.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Buffon';
+    src: url('../fonts/Buffon-Thin.woff2') format('woff2'),
+        url('../fonts/Buffon-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}

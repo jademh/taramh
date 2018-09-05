@@ -4,8 +4,13 @@ import Helmet from 'react-helmet';
 import { css } from 'glamor';
 import InfoPanel from '../components/InfoPanel';
 import { theme } from '../theme';
-
+import '../fonts/AUTHENTIC-Sans.woff';
+import '../fonts/AUTHENTIC-Sans.woff2';
+import '../fonts/Buffon-Thin.woff';
+import '../fonts/Buffon-Thin.woff2';
 import './index.css';
+import icon32 from '../favicon.png';
+
 
 const Layout = ({ children, data }) => {
 
@@ -16,11 +21,17 @@ const Layout = ({ children, data }) => {
   const nav = css({
     position: 'fixed',
     bottom: '10px',
-    marginLeft: '30px',
+    right: '15px',
     zIndex: 5,
     '@media only screen and (max-width: 45em)': {
-      top: '5px',
+      top: '0',
+      width: '100%',
+      left: '0',
       bottom: 'auto',
+      textAlign: 'center',
+      padding: '5px 0 2px 0',
+      background: theme.base.colors.background,
+      borderBottom: `2px solid ${theme.base.colors.modalBorder}`,
     },
   });
   const navList = css({
@@ -30,7 +41,7 @@ const Layout = ({ children, data }) => {
   });
   const navListItem = css({
     display: 'inline-block',
-    marginRight: '20px',
+    margin: '0 15px',
   });
 
   return (
@@ -39,6 +50,9 @@ const Layout = ({ children, data }) => {
         title={data.site.siteMetadata.title}
         meta={[
           { name: 'description', content: data.site.siteMetadata.description },
+        ]}
+        link={[
+          { rel: 'shortcut icon', type: 'image/png', href: `${icon32}` }
         ]}
       />
       <div>
@@ -101,6 +115,7 @@ export const query = graphql`
                     html
                   }
                 }
+                textAlignment
               }
             }
           }

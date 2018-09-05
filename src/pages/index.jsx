@@ -31,6 +31,15 @@ const IndexPage = ({ data }) => {
   if (node.copyLinkColourHover !== null) {
     theme.base.colors.copyLinkHover = node.copyLinkColourHover;
   }
+  if (node.modalCopyColour !== null) {
+    theme.base.colors.modalCopy = node.modalCopyColour;
+  }
+  if (node.modalCopyLinkColour !== null) {
+    theme.base.colors.modalCopyLink = node.modalCopyLinkColour;
+  }
+  if (node.modalCopyLinkColourHover !== null) {
+    theme.base.colors.modalCopyLinkHover = node.modalCopyLinkColourHover;
+  }
   if (node.navLinkColour !== null) {
     theme.base.colors.navLink = node.navLinkColour;
   }
@@ -78,6 +87,9 @@ export const pageQuery = graphql`
           modalBorderColour
           modalCloseIconColour
           modalCloseIconColourHover
+          modalCopyColour
+          modalCopyLinkColour
+          modalCopyLinkColourHover
           copyColour
           copyLinkColour
           copyLinkColourHover
@@ -103,6 +115,8 @@ export const pageQuery = graphql`
                 src
               }
             }
+            imageOffset
+            imageHeight
           }
         }
       }

@@ -34,13 +34,16 @@ class Homepage extends Component {
       maxWidth: `calc(100% - ${logoMargin * 2}px)`,
       maxHeight: `calc(100vh - ${logoMargin * 2}px)`,
       margin: `${logoMargin}px`,
+      '@media only screen and (max-width: 45em)': {
+        marginTop: `${logoMargin + 26}px`,
+      },
     });
 
     const pageWrapper = css({
       transition: '300ms padding ease-in-out',
       '@media only screen and (min-width: 45em)': {
         '&.st-description-panel-open': {
-          paddingLeft: '400px',
+          paddingLeft: theme.imageInfoPanel.width,
         },
       },
     });

@@ -61,19 +61,42 @@ class ImageList extends Component {
     } = this.state;
 
     const imageList = css({
-      margin: '100vh 0 0 0',
+      margin: '102vh 0 0 0',
       padding: 0,
       zIndex: 2,
       position: 'relative',
       listStyle: 'none',
       '@media only screen and (max-width: 45em)': {
-        marginTop: '50vh',
+        marginTop: '45vh',
       },
     });
 
     const imageListItem = css({
-      margin: '10vh 0',
+      margin: '20vh 0',
       textAlign: 'center',
+      '@media only screen and (max-width: 45em)': {
+        margin: '10vh 0',
+      },
+      '@media only screen and (min-width: 45em)': {
+        '&.left-s': {
+          padding: '0 0 0 40px',
+        },
+        '&.left-m': {
+          padding: '0 0 0 60px',
+        },
+        '&.left-l': {
+          padding: '0 0 0 80px',
+        },
+        '&.right-s': {
+          padding: '0 40px 0 0',
+        },
+        '&.right-m': {
+          padding: '0 60px 0 0',
+        },
+        '&.right-l': {
+          padding: '0 80px 0 0',
+        },
+      },
       '&:nth-child(even) img': {
         transform: 'rotate(1deg)',
       },
@@ -87,6 +110,20 @@ class ImageList extends Component {
       '&.has-description': {
         cursor: 'help',
       },
+      '@media only screen and (min-width: 45em)': {
+        '&.s': {
+          maxHeight: '70vh',
+        },
+        '&.m': {
+          maxHeight: '90vh',
+        },
+        '&.l': {
+          maxHeight: '120vh',
+        },
+        '&.xl': {
+          maxHeight: '150vh',
+        },
+      },
     });
 
     const descriptionPanel = css({
@@ -95,8 +132,8 @@ class ImageList extends Component {
       borderRight: `5px solid ${theme.base.colors.modalBorder}`,
       height: '100%',
       top: 0,
-      left: '-400px',
-      width: '400px',
+      left: `-${theme.imageInfoPanel.width}`,
+      width: theme.imageInfoPanel.width,
       padding: '0 20px',
       overflowY: 'auto',
       zIndex: 6,
@@ -108,6 +145,10 @@ class ImageList extends Component {
       '&.st-active': {
         left: 0,
       },
+    });
+
+    const descriptionPanelTitle = css({
+      paddingRight: '30px',
     });
 
     // todo - hide this properly (accessibility)
@@ -122,6 +163,12 @@ class ImageList extends Component {
       top: '10px',
       right: '10px',
       cursor: 'pointer',
+      width: '36px',
+      padding: 0,
+      marginTop: '-4px',
+      '& svg': {
+        width: '100%',
+      },
       '& svg path': {
         transition: 'fill 300ms ease-in-out',
       },
@@ -134,8 +181,8 @@ class ImageList extends Component {
       <div>
         <ul {...imageList}>
           {images.map(image => (
-            <li {...imageListItem} key={image.media.id}>
-              <img {...imageListImage} className={image.longDescription !== null ? 'has-description' : ''} onClick={() => this.handleClick(image.title, image.longDescription)} src={image.media.resolutions.src} alt={image.media.description} />
+            <li {...imageListItem} className={image.imageOffset} key={image.media.id}>
+              <img {...imageListImage} className={`${image.longDescription !== null ? 'has-description' : ''} ${image.imageHeight}`} onClick={() => this.handleClick(image.title, image.longDescription)} src={image.media.resolutions.src} alt={image.media.description} />
               {image.longDescription !== null &&
                 <div {...imageListDescription} dangerouslySetInnerHTML={{ __html: image.longDescription.childMarkdownRemark.html }} />
               }
@@ -143,12 +190,12 @@ class ImageList extends Component {
           ))}
         </ul>
         <div {...descriptionPanel} className={descriptionPanelActive ? 'st-active' : ''}>
-          <h2>{title}</h2>
+          <h2 {...descriptionPanelTitle}>{title}</h2>
           {description !== null &&
             <div dangerouslySetInnerHTML={{ __html: description.childMarkdownRemark.html }} />
           }
           <button {...infoPanelClose} type="button" onClick={this.handleCloseButtonClick}>
-            <svg width="48" height="48" version="1.1"
+            <svg viewBox="0 0 48 48" width="48" height="48" version="1.1"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill={theme.base.colors.icon} d="M 36.019531 8.445313 L 39.558594 11.980469 L 11.980469 39.554688 L 8.445313 36.019531 Z "/>
                 <path fill={theme.base.colors.icon} d="M 39.554688 36.023438 L 36.019531 39.558594 L 8.445313 11.976563 L 11.980469 8.441406 Z "/>
