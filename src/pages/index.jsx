@@ -53,6 +53,7 @@ const IndexPage = ({ data }) => {
         title={node.pageTitle}
         meta={[
           { name: 'description', content: node.pageDescription.childMarkdownRemark.rawMarkdownBody },
+          { property: 'og:image', content: node.opengraphImage.sizes.src },
         ]}
       />
       <Homepage
@@ -98,6 +99,12 @@ export const pageQuery = graphql`
           heroImage {
             description
             sizes(maxWidth: 1912, quality: 100) {
+              src
+            }
+          }
+          opengraphImage {
+            description
+            sizes(maxWidth: 800, quality: 100) {
               src
             }
           }

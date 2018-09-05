@@ -50,6 +50,7 @@ const Layout = ({ children, data }) => {
         title={data.site.siteMetadata.title}
         meta={[
           { name: 'description', content: data.site.siteMetadata.description },
+          { property: 'og:title', content: data.site.siteMetadata.title },
         ]}
         link={[
           { rel: 'shortcut icon', type: 'image/png', href: `${icon32}` }
