@@ -56,7 +56,7 @@ const Layout = ({ children, data }) => {
           { rel: 'shortcut icon', type: 'image/png', href: `${icon32}` }
         ]}
       />
-      <div>
+      <div className="app-wrapper">
         <nav {...nav}>
           <ul {...navList}>
             {data.allContentfulInfoPage.edges.map(edge => (
@@ -117,6 +117,13 @@ export const query = graphql`
                   }
                 }
                 textAlignment
+              }
+              ... on ContentfulCredit {
+                credit {
+                  childMarkdownRemark {
+                    html
+                  }
+                }
               }
             }
           }

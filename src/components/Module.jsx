@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './Button';
 import Text from './Text';
+import Credit from './Credit';
 
 const Module = ({ props }) => {
   const contentType = props.__typename;
@@ -12,6 +13,11 @@ const Module = ({ props }) => {
   if (contentType === 'ContentfulText') {
     return (
       <Text {...props} />
+    );
+  }
+  if (contentType === 'ContentfulCredit') {
+    return (
+      <Credit {...props} />
     );
   }
   return false;

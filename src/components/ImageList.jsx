@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { css } from 'glamor';
 import { theme } from '../theme';
+import helpCursor from '../cursors/help.png';
 
 class ImageList extends Component {
   constructor(props) {
@@ -108,7 +109,7 @@ class ImageList extends Component {
       maxHeight: '90vh',
       transform: 'rotate(-1deg)',
       '&.has-description': {
-        cursor: 'help',
+        cursor: `url("${helpCursor}"), help`,	
       },
       '@media only screen and (min-width: 45em)': {
         '&.s': {
