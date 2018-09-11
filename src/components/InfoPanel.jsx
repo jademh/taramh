@@ -63,6 +63,8 @@ class InfoPanel extends Component {
       position: 'fixed',
       top: 0,
       left: 0,
+      bottom: 0,
+      right: 0,
       background: theme.base.colors.modalBackground,
       borderTop: `5px solid ${theme.base.colors.modalBorder}`,
       width: '100%',
