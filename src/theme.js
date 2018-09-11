@@ -19,6 +19,7 @@ const theme = {
   },
   imageInfoPanel: {
     width: '320px',
+    transitionTime: 300,
   },
   nav: {
     fontSize: '13px',

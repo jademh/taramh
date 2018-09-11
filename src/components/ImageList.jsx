@@ -9,21 +9,20 @@ class ImageList extends Component {
     this.state = {
       title: null,
       description: null,
+      id: null,
     };
 
-    this.handleClick = (title, description) => {
-      if (description === null) {
+    this.handleClick = (id, title, description) => {
+      if (description === null || id === this.state.id) {
         this.closeDescriptionPanel();
-      } else if(title !== this.state.title && description !== this.state.description) {
+      } else if (id !== this.state.id) {
         if (this.props.descriptionPanelActive) {
           this.closeDescriptionPanel();
           setTimeout(() => {
-            this.setState({ title, description });
-            this.openDescriptionPanel();
-          }, 300);
+            this.openDescriptionPanel(id, title, description);
+          }, theme.imageInfoPanel.transitionTime);
         } else {
-          this.setState({ title, description });
-          this.openDescriptionPanel();
+          this.openDescriptionPanel(id, title, description);
         }
       }
     };
@@ -32,11 +31,13 @@ class ImageList extends Component {
       this.closeDescriptionPanel();
     };
 
-    this.openDescriptionPanel = () => {
+    this.openDescriptionPanel = (id, title, description) => {
+      this.setState({ id, title, description });
       this.props.onDescriptionPanelChange(true);
       document.addEventListener('keydown', this.handleKeyPress, false);
     };
     this.closeDescriptionPanel = () => {
+      this.setState({ id: null, title: null, description: null });
       this.props.onDescriptionPanelChange(false);
       document.removeEventListener('keydown', this.handleKeyPress, false);
       this.setState({ title: null, description: null });
@@ -138,7 +139,7 @@ class ImageList extends Component {
       padding: '0 20px',
       overflowY: 'auto',
       zIndex: 6,
-      transition: 'all 300ms ease-in-out',
+      transition: `all ${theme.imageInfoPanel.transitionTime}ms ease-in-out`,
       '@media only screen and (max-width: 45em)': {
         width: '100%',
         left: '-100%',
@@ -183,7 +184,7 @@ class ImageList extends Component {
         <ul {...imageList}>
           {images.map(image => (
             <li {...imageListItem} className={image.imageOffset} key={image.media.id}>
-              <img {...imageListImage} className={`${image.longDescription !== null ? 'has-description' : ''} ${image.imageHeight}`} onClick={() => this.handleClick(image.title, image.longDescription)} src={image.media.resolutions.src} alt={image.media.description} />
+              <img {...imageListImage} className={`${image.longDescription !== null ? 'has-description' : ''} ${image.imageHeight}`} onClick={() => this.handleClick(image.media.id, image.title, image.longDescription)} src={image.media.resolutions.src} alt={image.media.description} />
               {image.longDescription !== null &&
                 <div {...imageListDescription} dangerouslySetInnerHTML={{ __html: image.longDescription.childMarkdownRemark.html }} />
               }
