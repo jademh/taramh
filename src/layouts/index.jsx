@@ -119,6 +119,7 @@ export const query = graphql`
                 textAlignment
               }
               ... on ContentfulCredit {
+                id
                 credit {
                   childMarkdownRemark {
                     html

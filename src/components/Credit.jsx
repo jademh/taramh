@@ -14,7 +14,7 @@ const Credit = (props) => {
     width: '100%',
     paddingRight: '30px',
     textAlign: 'right',
-    '& a' : {
+    '& a': {
       color: 'red',
       '&:hover': {
         color: 'white',
