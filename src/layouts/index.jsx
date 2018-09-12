@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { css, media } from 'glamor';
 import InfoPanel from '../components/InfoPanel';
@@ -13,7 +12,6 @@ import icon32 from '../favicon.png';
 
 
 const Layout = ({ children, data }) => {
-
   css.global('body', { background: theme.base.colors.background, color: theme.base.colors.copy });
   css.global('p a', { color: theme.base.colors.copyLink });
   css.global('p a:hover', { color: theme.base.colors.copyLinkHover });
@@ -54,7 +52,7 @@ const Layout = ({ children, data }) => {
           { property: 'og:title', content: data.site.siteMetadata.title },
         ]}
         link={[
-          { rel: 'shortcut icon', type: 'image/png', href: `${icon32}` }
+          { rel: 'shortcut icon', type: 'image/png', href: `${icon32}` },
         ]}
       />
       <div className="app-wrapper">
@@ -71,10 +69,6 @@ const Layout = ({ children, data }) => {
       </div>
     </div>
   );
-};
-
-Layout.propTypes = {
-  children: PropTypes.func,
 };
 
 export default Layout;

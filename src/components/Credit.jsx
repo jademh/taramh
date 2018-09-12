@@ -28,7 +28,7 @@ const Credit = (props) => {
   }));
 
   return (
-      <div {...creditWrap} dangerouslySetInnerHTML={{ __html: credit.childMarkdownRemark.html }} />
+    <div {...creditWrap} dangerouslySetInnerHTML={{ __html: credit.childMarkdownRemark.html }} />
   );
 };
 

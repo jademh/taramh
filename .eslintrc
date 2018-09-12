@@ -1,6 +1,7 @@
 {
   "extends": "airbnb",
   "globals": {
-    "graphql": true
+    "graphql": true,
+    "document": true
   }
 }

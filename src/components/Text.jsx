@@ -15,9 +15,7 @@ const Text = (props) => {
 
   return (
     <div>
-      {hideSubtitle === false &&
-        <h2>{subtitle}</h2>
-      }
+      {hideSubtitle === false && <h2>{subtitle}</h2>}
       <div {...textWrap} dangerouslySetInnerHTML={{ __html: text.childMarkdownRemark.html }} />
     </div>
   );

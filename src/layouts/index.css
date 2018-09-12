@@ -40,6 +40,11 @@ button {
 	font-family: "Authentic", "Helvetica", "Arial", sans-serif;
 }
 
+a:active,
+button:active {
+  outline: none;
+}
+
 @font-face {
 	font-family: 'Authentic';
 	src: url('../fonts/AUTHENTIC-Sans.woff2') format('woff2'),

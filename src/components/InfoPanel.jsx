@@ -4,17 +4,17 @@ import Module from './Module';
 import { theme } from '../theme';
 
 class InfoPanel extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       active: false,
     };
 
     this.handleClick = () => {
-      if (this.state.active) {
+      const { active } = this.state;
+      if (active) {
         this.closePanel();
-      }
-      else {
+      } else {
         this.openPanel();
       }
     };
@@ -29,7 +29,7 @@ class InfoPanel extends Component {
     this.openPanel = () => {
       this.setState({ active: true });
       document.addEventListener('keydown', this.handleKeyPress, false);
-    }
+    };
 
     this.closePanel = () => {
       this.setState({ active: false });
@@ -38,10 +38,11 @@ class InfoPanel extends Component {
   }
 
   render() {
+    const { node } = this.props;
     const {
       title,
       contentModules,
-    } = this.props.node;
+    } = node;
     const { active } = this.state;
 
     const infoPanelCta = css({
@@ -70,8 +71,9 @@ class InfoPanel extends Component {
       width: '100%',
       height: '100vh',
       marginTop: active ? '0' : '100vh',
-      transition: 'margin 300ms ease-in-out',
       display: 'flex',
+      visibility: active ? 'visible' : 'hidden',
+      transition: 'all 300ms ease-in-out',
       alignItems: 'center',
       color: theme.base.colors.modalCopy,
     });
@@ -104,17 +106,24 @@ class InfoPanel extends Component {
     return (
       <div>
         <button {...infoPanelCta} type="button" onClick={this.handleClick}>{title}</button>
-        <div {...infoPanel}>
-          <button {...infoPanelClose} type="button" onClick={this.handleClick}>
-            <svg width="48" height="48" version="1.1"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill={theme.base.colors.icon} d="M 36.019531 8.445313 L 39.558594 11.980469 L 11.980469 39.554688 L 8.445313 36.019531 Z "/>
-                <path fill={theme.base.colors.icon} d="M 39.554688 36.023438 L 36.019531 39.558594 L 8.445313 11.976563 L 11.980469 8.441406 Z "/>
+        <div
+          {...infoPanel}
+          aria-hidden={!active}
+        >
+          <button {...infoPanelClose} type="button" onClick={this.handleClick} aria-label={`Close ${title} Panel`}>
+            <svg
+              width="48"
+              height="48"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fill={theme.base.colors.icon} d="M 36.019531 8.445313 L 39.558594 11.980469 L 11.980469 39.554688 L 8.445313 36.019531 Z " />
+              <path fill={theme.base.colors.icon} d="M 39.554688 36.023438 L 36.019531 39.558594 L 8.445313 11.976563 L 11.980469 8.441406 Z " />
             </svg>
           </button>
           <div {...infoPanelContent}>
             <h1 {...infoPanelTitle}>{title}</h1>
-            {contentModules ? contentModules.map(edge => <Module key={edge.id} props={edge} />) : null}
+            {contentModules && contentModules.map(edge => <Module key={edge.id} props={edge} />)}
           </div>
         </div>
       </div>

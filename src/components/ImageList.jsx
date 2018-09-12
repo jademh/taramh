@@ -4,19 +4,21 @@ import { theme } from '../theme';
 import helpCursor from '../cursors/help.png';
 
 class ImageList extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
-      title: null,
-      description: null,
-      id: null,
+      activeTitle: null,
+      activeDescription: null,
+      activeId: null,
     };
 
     this.handleClick = (id, title, description) => {
-      if (description === null || id === this.state.id) {
+      const { activeId } = this.state;
+      const { descriptionPanelActive } = this.props;
+      if (description === null || id === activeId) {
         this.closeDescriptionPanel();
-      } else if (id !== this.state.id) {
-        if (this.props.descriptionPanelActive) {
+      } else if (id !== activeId) {
+        if (descriptionPanelActive) {
           this.closeDescriptionPanel();
           setTimeout(() => {
             this.openDescriptionPanel(id, title, description);
@@ -31,16 +33,21 @@ class ImageList extends Component {
       this.closeDescriptionPanel();
     };
 
-    this.openDescriptionPanel = (id, title, description) => {
-      this.setState({ id, title, description });
-      this.props.onDescriptionPanelChange(true);
+    this.openDescriptionPanel = (activeId, activeTitle, activeDescription) => {
+      const { onDescriptionPanelChange } = this.props;
+      this.setState({ activeId, activeTitle, activeDescription });
+      onDescriptionPanelChange(true);
       document.addEventListener('keydown', this.handleKeyPress, false);
     };
+
     this.closeDescriptionPanel = () => {
-      this.setState({ id: null, title: null, description: null });
-      this.props.onDescriptionPanelChange(false);
+      const { onDescriptionPanelChange } = this.props;
+      onDescriptionPanelChange(false);
       document.removeEventListener('keydown', this.handleKeyPress, false);
-      this.setState({ title: null, description: null });
+      // Don't remove the description text until the transition has finished
+      setTimeout(() => {
+        this.setState({ activeId: null, activeTitle: null, activeDescription: null });
+      }, theme.imageInfoPanel.transitionTime);
     };
 
     this.handleKeyPress = (event) => {
@@ -58,8 +65,8 @@ class ImageList extends Component {
     } = this.props;
 
     const {
-      description,
-      title,
+      activeDescription,
+      activeTitle,
     } = this.state;
 
     const imageList = css({
@@ -68,6 +75,9 @@ class ImageList extends Component {
       zIndex: 2,
       position: 'relative',
       listStyle: 'none',
+      '& li:nth-child(even) button:first-child, & li:nth-child(even) div:first-child': {
+        transform: 'rotate(1deg)',
+      },
     },
     media(`(max-width: ${theme.breakpoints.mobile})`, {
       marginTop: '45vh',
@@ -76,9 +86,6 @@ class ImageList extends Component {
     const imageListItem = css({
       margin: '20vh 0',
       textAlign: 'center',
-      '&:nth-child(even) img': {
-        transform: 'rotate(1deg)',
-      },
     },
     media(`(max-width: ${theme.breakpoints.mobile})`, {
       margin: '10vh 0',
@@ -104,14 +111,23 @@ class ImageList extends Component {
       },
     }));
 
-    const imageListImage = css({
+    const clickableImageListImageWrap = css({
+      cursor: `url("${helpCursor}"), help`,
+    });
+
+    const imageListImageWrap = css({
+      display: 'inline-block', // sometimes the wrapper is a button, so it needs to be a block element
+      background: 'none',
+      border: 0,
+      padding: 0,
+      transform: 'rotate(-1deg)',
       maxWidth: '90%',
+    });
+
+    const imageListImage = css({
       height: 'auto',
       maxHeight: '90vh',
-      transform: 'rotate(-1deg)',
-      '&.has-description': {
-        cursor: `url("${helpCursor}"), help`,
-      },
+      maxWidth: '100%',
     },
     media(`(min-width: ${theme.breakpoints.mobile})`, {
       '&.s': {
@@ -134,19 +150,17 @@ class ImageList extends Component {
       borderRight: `5px solid ${theme.base.colors.modalBorder}`,
       height: '100%',
       top: 0,
-      left: `-${theme.imageInfoPanel.width}`,
+      left: descriptionPanelActive ? '0' : `-${theme.imageInfoPanel.width}`,
+      visibility: descriptionPanelActive ? 'visible' : 'hidden',
       width: theme.imageInfoPanel.width,
       padding: '0 20px',
       overflowY: 'auto',
       zIndex: 6,
       transition: `all ${theme.imageInfoPanel.transitionTime}ms ease-in-out`,
-      '&.st-active': {
-        left: 0,
-      },
     },
     media(`(max-width: ${theme.breakpoints.mobile})`, {
       width: '100%',
-      left: '-100%',
+      left: descriptionPanelActive ? '0' : '-100%',
     }));
 
     const descriptionPanelTitle = css({
@@ -179,34 +193,123 @@ class ImageList extends Component {
       },
     });
 
+    function LongDescription(props) {
+      const { description } = props;
+      if (description !== null) {
+        return (
+          <div
+            {...imageListDescription}
+            dangerouslySetInnerHTML={{ __html: description.childMarkdownRemark.html }}
+          />
+        );
+      }
+      return null;
+    }
+
+    function Image(props) {
+      const {
+        src,
+        description,
+        height,
+      } = props;
+      return (
+        <img
+          {...imageListImage}
+          className={height}
+          src={src}
+          alt={description}
+        />
+      );
+    }
+
+    function ImageWrap(props) {
+      const {
+        longDescription,
+        id,
+        title,
+        handleClick,
+      } = props;
+      if (longDescription !== null) {
+        return (
+          <button
+            {...imageListImageWrap}
+            {...clickableImageListImageWrap}
+            type="button"
+            onClick={() => handleClick(id, title, longDescription)}
+          >
+            <Image {...props} />
+          </button>
+        );
+      }
+      return (
+        <div
+          {...imageListImageWrap}
+        >
+          <Image {...props} />
+        </div>
+      );
+    }
+
+    function DescriptionPanel(props) {
+      const {
+        title,
+        description,
+      } = props;
+      if (description !== null) {
+        return (
+          <div>
+            <h2 {...descriptionPanelTitle}>{title}</h2>
+            <div dangerouslySetInnerHTML={{ __html: description.childMarkdownRemark.html }} />
+          </div>
+        );
+      }
+      return null;
+    }
+
     return (
       <div>
         <ul {...imageList}>
           {images.map(image => (
             <li {...imageListItem} className={image.imageOffset} key={image.media.id}>
-              <img {...imageListImage} className={`${image.longDescription !== null ? 'has-description' : ''} ${image.imageHeight}`} onClick={() => this.handleClick(image.media.id, image.title, image.longDescription)} src={image.media.resolutions.src} alt={image.media.description} />
-              {image.longDescription !== null &&
-                <div {...imageListDescription} dangerouslySetInnerHTML={{ __html: image.longDescription.childMarkdownRemark.html }} />
-              }
+              <ImageWrap
+                longDescription={image.longDescription}
+                id={image.media.id}
+                title={image.title}
+                height={image.imageHeight}
+                src={image.media.resolutions.src}
+                description={image.media.description}
+                handleClick={this.handleClick}
+              />
+              <LongDescription description={image.longDescription} />
             </li>
           ))}
         </ul>
-        <div {...descriptionPanel} className={descriptionPanelActive ? 'st-active' : ''}>
-          <h2 {...descriptionPanelTitle}>{title}</h2>
-          {description !== null &&
-            <div dangerouslySetInnerHTML={{ __html: description.childMarkdownRemark.html }} />
-          }
-          <button {...infoPanelClose} type="button" onClick={this.handleCloseButtonClick}>
-            <svg viewBox="0 0 48 48" width="48" height="48" version="1.1"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill={theme.base.colors.icon} d="M 36.019531 8.445313 L 39.558594 11.980469 L 11.980469 39.554688 L 8.445313 36.019531 Z "/>
-                <path fill={theme.base.colors.icon} d="M 39.554688 36.023438 L 36.019531 39.558594 L 8.445313 11.976563 L 11.980469 8.441406 Z "/>
+        <div
+          {...descriptionPanel}
+          aria-hidden={!descriptionPanelActive}
+        >
+          <DescriptionPanel title={activeTitle} description={activeDescription} />
+          <button
+            {...infoPanelClose}
+            type="button"
+            aria-label="Close image info panel"
+            onClick={this.handleCloseButtonClick}
+          >
+            <svg
+              viewBox="0 0 48 48"
+              width="48"
+              height="48"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fill={theme.base.colors.icon} d="M 36.019531 8.445313 L 39.558594 11.980469 L 11.980469 39.554688 L 8.445313 36.019531 Z " />
+              <path fill={theme.base.colors.icon} d="M 39.554688 36.023438 L 36.019531 39.558594 L 8.445313 11.976563 L 11.980469 8.441406 Z " />
             </svg>
           </button>
         </div>
       </div>
     );
   }
-};
+}
 
 export default ImageList;

@@ -4,7 +4,7 @@ import ImageList from './ImageList';
 import { theme } from '../theme';
 
 class Homepage extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       descriptionPanelActive: false,
@@ -20,6 +20,10 @@ class Homepage extends Component {
       heroImageDescription,
       imageList,
     } = this.props;
+
+    const {
+      descriptionPanelActive,
+    } = this.state;
 
     const logoMargin = 30;
 
@@ -51,11 +55,15 @@ class Homepage extends Component {
     }));
 
     return (
-      <div {...pageWrapper} className={this.state.descriptionPanelActive ? 'st-description-panel-open' : ''}>
+      <div {...pageWrapper} className={descriptionPanelActive ? 'st-description-panel-open' : ''}>
         <div {...mainLogoWrap}>
           <img {...mainLogo} src={heroImageSrc} alt={heroImageDescription} />
         </div>
-        <ImageList images={imageList} descriptionPanelActive={this.state.descriptionPanelActive} onDescriptionPanelChange={this.handleDescriptionPanelChange} />
+        <ImageList
+          images={imageList}
+          descriptionPanelActive={descriptionPanelActive}
+          onDescriptionPanelChange={this.handleDescriptionPanelChange}
+        />
       </div>
     );
   }
