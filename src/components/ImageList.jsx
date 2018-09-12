@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { css } from 'glamor';
+import { css, media } from 'glamor';
 import { theme } from '../theme';
 import helpCursor from '../cursors/help.png';
 
@@ -68,41 +68,41 @@ class ImageList extends Component {
       zIndex: 2,
       position: 'relative',
       listStyle: 'none',
-      '@media only screen and (max-width: 45em)': {
-        marginTop: '45vh',
-      },
-    });
+    },
+    media(`(max-width: ${theme.breakpoints.mobile})`, {
+      marginTop: '45vh',
+    }));
 
     const imageListItem = css({
       margin: '20vh 0',
       textAlign: 'center',
-      '@media only screen and (max-width: 45em)': {
-        margin: '10vh 0',
-      },
-      '@media only screen and (min-width: 45em)': {
-        '&.left-s': {
-          padding: '0 0 0 40px',
-        },
-        '&.left-m': {
-          padding: '0 0 0 60px',
-        },
-        '&.left-l': {
-          padding: '0 0 0 80px',
-        },
-        '&.right-s': {
-          padding: '0 40px 0 0',
-        },
-        '&.right-m': {
-          padding: '0 60px 0 0',
-        },
-        '&.right-l': {
-          padding: '0 80px 0 0',
-        },
-      },
       '&:nth-child(even) img': {
         transform: 'rotate(1deg)',
       },
-    });
+    },
+    media(`(max-width: ${theme.breakpoints.mobile})`, {
+      margin: '10vh 0',
+    }),
+    media(`(min-width: ${theme.breakpoints.mobile})`, {
+      '&.left-s': {
+        padding: '0 0 0 40px',
+      },
+      '&.left-m': {
+        padding: '0 0 0 60px',
+      },
+      '&.left-l': {
+        padding: '0 0 0 80px',
+      },
+      '&.right-s': {
+        padding: '0 40px 0 0',
+      },
+      '&.right-m': {
+        padding: '0 60px 0 0',
+      },
+      '&.right-l': {
+        padding: '0 80px 0 0',
+      },
+    }));
 
     const imageListImage = css({
       maxWidth: '90%',
@@ -110,23 +110,23 @@ class ImageList extends Component {
       maxHeight: '90vh',
       transform: 'rotate(-1deg)',
       '&.has-description': {
-        cursor: `url("${helpCursor}"), help`,	
+        cursor: `url("${helpCursor}"), help`,
       },
-      '@media only screen and (min-width: 45em)': {
-        '&.s': {
-          maxHeight: '70vh',
-        },
-        '&.m': {
-          maxHeight: '90vh',
-        },
-        '&.l': {
-          maxHeight: '120vh',
-        },
-        '&.xl': {
-          maxHeight: '150vh',
-        },
+    },
+    media(`(min-width: ${theme.breakpoints.mobile})`, {
+      '&.s': {
+        maxHeight: '70vh',
       },
-    });
+      '&.m': {
+        maxHeight: '90vh',
+      },
+      '&.l': {
+        maxHeight: '120vh',
+      },
+      '&.xl': {
+        maxHeight: '150vh',
+      },
+    }));
 
     const descriptionPanel = css({
       position: 'fixed',
@@ -140,14 +140,14 @@ class ImageList extends Component {
       overflowY: 'auto',
       zIndex: 6,
       transition: `all ${theme.imageInfoPanel.transitionTime}ms ease-in-out`,
-      '@media only screen and (max-width: 45em)': {
-        width: '100%',
-        left: '-100%',
-      },
       '&.st-active': {
         left: 0,
       },
-    });
+    },
+    media(`(max-width: ${theme.breakpoints.mobile})`, {
+      width: '100%',
+      left: '-100%',
+    }));
 
     const descriptionPanelTitle = css({
       paddingRight: '30px',

@@ -28,6 +28,9 @@ const theme = {
     primaryFontSize: '25px',
     secondaryFontSize: '14px',
   },
+  breakpoints: {
+    mobile: '45em',
+  },
 };
 
 export { theme };

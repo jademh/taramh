@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { css } from 'glamor';
+import { css, media } from 'glamor';
 import InfoPanel from '../components/InfoPanel';
 import { theme } from '../theme';
 import '../fonts/AUTHENTIC-Sans.woff';
@@ -23,17 +23,18 @@ const Layout = ({ children, data }) => {
     bottom: '10px',
     right: '15px',
     zIndex: 5,
-    '@media only screen and (max-width: 45em)': {
-      top: '0',
-      width: '100%',
-      left: '0',
-      bottom: 'auto',
-      textAlign: 'center',
-      padding: '5px 0 2px 0',
-      background: theme.base.colors.background,
-      borderBottom: `2px solid ${theme.base.colors.modalBorder}`,
-    },
-  });
+  },
+  media(`(max-width: ${theme.breakpoints.mobile})`, {
+    top: '0',
+    width: '100%',
+    left: '0',
+    bottom: 'auto',
+    textAlign: 'center',
+    padding: '5px 0 2px 0',
+    background: theme.base.colors.background,
+    borderBottom: `2px solid ${theme.base.colors.modalBorder}`,
+  }));
+
   const navList = css({
     listStyle: 'none',
     margin: 0,

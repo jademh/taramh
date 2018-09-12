@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { css } from 'glamor';
+import { css, media } from 'glamor';
 import ImageList from './ImageList';
 import { theme } from '../theme';
 
@@ -20,8 +20,9 @@ class Homepage extends Component {
       heroImageDescription,
       imageList,
     } = this.props;
-    
+
     const logoMargin = 30;
+
     const mainLogoWrap = css({
       background: theme.base.colors.background,
       position: 'fixed',
@@ -30,23 +31,24 @@ class Homepage extends Component {
       height: '100vh',
       zIndex: 1,
     });
+
     const mainLogo = css({
       maxWidth: `calc(100% - ${logoMargin * 2}px)`,
       maxHeight: `calc(100vh - ${logoMargin * 2}px)`,
       margin: `${logoMargin}px`,
-      '@media only screen and (max-width: 45em)': {
-        marginTop: `${logoMargin + 26}px`,
-      },
-    });
+    },
+    media(`(max-width: ${theme.breakpoints.mobile})`, {
+      marginTop: `${logoMargin + 26}px`,
+    }));
 
     const pageWrapper = css({
       transition: '300ms padding ease-in-out',
-      '@media only screen and (min-width: 45em)': {
-        '&.st-description-panel-open': {
-          paddingLeft: theme.imageInfoPanel.width,
-        },
+    },
+    media(`(min-width: ${theme.breakpoints.mobile})`, {
+      '&.st-description-panel-open': {
+        paddingLeft: theme.imageInfoPanel.width,
       },
-    });
+    }));
 
     return (
       <div {...pageWrapper} className={this.state.descriptionPanelActive ? 'st-description-panel-open' : ''}>
