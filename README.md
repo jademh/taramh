@@ -10,10 +10,11 @@ Personal website for graphic designer [Tara MH](http://www.taramh.com)
 
 # Set up
 
-You will need to create a .env file in the project root with your Contentful API Keys
+You will need to create a .env file in the project root with your Contentful API Keys and Google Analytics tracking id
 
 SPACE_ID=xxx
 ACCESS_TOKEN=xxx
+GA_TAG=xxx
 
 ```sh
 $ npm install

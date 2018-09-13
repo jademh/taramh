@@ -14,6 +14,15 @@ module.exports = {
         accessToken: process.env.ACCESS_TOKEN,
       },
     },
+    {
+      resolve: 'gatsby-plugin-gtag',
+      options: {
+        // your google analytics tracking id
+        trackingId: process.env.GA_TAG,
+        // enable ip anonymization
+        anonymize: true,
+      },
+    },
     'gatsby-transformer-remark',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-eslint',
