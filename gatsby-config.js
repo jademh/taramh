@@ -15,12 +15,15 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-gtag',
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
-        // your google analytics tracking id
         trackingId: process.env.GA_TAG,
-        // enable ip anonymization
+        // Puts tracking script in the head instead of the body
+        head: true,
+        // Setting this parameter is optional
         anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
       },
     },
     'gatsby-transformer-remark',

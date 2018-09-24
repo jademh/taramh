@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { css } from 'glamor';
 import Module from './Module';
 import { theme } from '../theme';
+import { trackEvent } from '../tracking';
 
 class InfoPanel extends Component {
   constructor() {
@@ -28,6 +29,7 @@ class InfoPanel extends Component {
 
     this.openPanel = () => {
       this.setState({ active: true });
+      trackEvent('Footer Info Link', 'Click', this.props.node.title);
       document.addEventListener('keydown', this.handleKeyPress, false);
     };
 

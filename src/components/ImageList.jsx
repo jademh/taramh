@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { css, media } from 'glamor';
 import { theme } from '../theme';
 import helpCursor from '../cursors/help.png';
+import { trackEvent } from '../tracking';
 
 class ImageList extends Component {
   constructor() {
@@ -37,6 +38,7 @@ class ImageList extends Component {
       const { onDescriptionPanelChange } = this.props;
       this.setState({ activeId, activeTitle, activeDescription });
       onDescriptionPanelChange(true);
+      trackEvent('Portfolio Image', 'Click', activeTitle);
       document.addEventListener('keydown', this.handleKeyPress, false);
     };
 
