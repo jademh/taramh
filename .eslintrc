@@ -2,6 +2,14 @@
   "extends": "airbnb",
   "globals": {
     "graphql": true,
-    "document": true
-  }
+    "document": true,
+    "ga": true
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "max-len": [1,100],
+    "no-underscore-dangle": 0,
+    "arrow-body-style": 0
+  },
+  "parser": "babel-eslint"
 }

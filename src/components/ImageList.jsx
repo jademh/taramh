@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { css, media } from 'glamor';
-import { theme } from '../theme';
+import theme from '../theme';
 import helpCursor from '../cursors/help.png';
-import { trackEvent } from '../tracking';
+import trackEvent from '../tracking';
 
 class ImageList extends Component {
   constructor() {
@@ -278,7 +278,7 @@ class ImageList extends Component {
                 id={image.media.id}
                 title={image.title}
                 height={image.imageHeight}
-                src={image.media.resolutions.src}
+                src={image.media.fixed.src}
                 description={image.media.description}
                 handleClick={this.handleClick}
               />

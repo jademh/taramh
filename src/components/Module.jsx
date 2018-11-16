@@ -4,7 +4,6 @@ import Text from './Text';
 import Credit from './Credit';
 
 const Module = ({ props }) => {
-  /* eslint no-underscore-dangle: ["error", { "allow": ["__typename"] }] */
   const contentType = props.__typename;
   if (contentType === 'ContentfulButton') {
     return (

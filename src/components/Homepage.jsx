@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { css, media } from 'glamor';
 import ImageList from './ImageList';
-import { theme } from '../theme';
+import theme from '../theme';
 
 class Homepage extends Component {
   constructor() {

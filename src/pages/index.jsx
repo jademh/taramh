@@ -1,7 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { graphql } from 'gatsby';
+import Layout from '../components/Layout';
 import Homepage from '../components/Homepage';
-import { theme } from '../theme';
+import theme from '../theme';
 
 const IndexPage = ({ data }) => {
   const { node } = data.allContentfulHomepage.edges[0];
@@ -48,20 +50,20 @@ const IndexPage = ({ data }) => {
   }
 
   return (
-    <div>
+    <Layout>
       <Helmet
         title={node.pageTitle}
         meta={[
           { name: 'description', content: node.pageDescription.childMarkdownRemark.rawMarkdownBody },
-          { property: 'og:image', content: node.opengraphImage.sizes.src },
+          { property: 'og:image', content: node.opengraphImage.fluid.src },
         ]}
       />
       <Homepage
-        heroImageSrc={node.heroImage.sizes.src}
+        heroImageSrc={node.heroImage.fluid.src}
         heroImageDescription={node.heroImage.description}
         imageList={node.imageList}
       />
-    </div>
+    </Layout>
   );
 };
 
@@ -98,13 +100,13 @@ export const pageQuery = graphql`
           navLinkColourHover
           heroImage {
             description
-            sizes(maxWidth: 1912, quality: 100) {
+            fluid(maxWidth: 1912, quality: 100) {
               src
             }
           }
           opengraphImage {
             description
-            sizes(maxWidth: 800, quality: 100) {
+            fluid(maxWidth: 800, quality: 100) {
               src
             }
           }
@@ -118,7 +120,7 @@ export const pageQuery = graphql`
             media {
               id
               description
-              resolutions(width: 900, quality: 100, resizingBehavior: NO_CHANGE) {
+              fixed(width: 900, quality: 100, resizingBehavior: NO_CHANGE) {
                 src
               }
             }

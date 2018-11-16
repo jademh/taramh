@@ -47,16 +47,16 @@ button:active {
 
 @font-face {
 	font-family: 'Authentic';
-	src: url('../fonts/AUTHENTIC-Sans.woff2') format('woff2'),
-	  url('../fonts/AUTHENTIC-Sans.woff') format('woff');
+	src: url('./fonts/AUTHENTIC-Sans.woff2') format('woff2'),
+	  url('./fonts/AUTHENTIC-Sans.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
   }
 
   @font-face {
     font-family: 'Buffon';
-    src: url('../fonts/Buffon-Thin.woff2') format('woff2'),
-        url('../fonts/Buffon-Thin.woff') format('woff');
+    src: url('./fonts/Buffon-Thin.woff2') format('woff2'),
+        url('./fonts/Buffon-Thin.woff') format('woff');
     font-weight: 100;
     font-style: normal;
 }
